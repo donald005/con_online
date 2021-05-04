@@ -18,5 +18,6 @@ sudo ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
 wget --no-check-certificate https://raw.githubusercontent.com/donald005/con_online/master/.tmux.conf && chmod +666 .tmux.conf
 wget --no-check-certificate https://raw.githubusercontent.com/donald005/con_online/master/tdonal.sh && chmod +x tdonal.sh
 ```
+####  **生效需要**
 ##### reboot
 
