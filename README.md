@@ -11,7 +11,7 @@ sudo mv /etc/resolv.conf /etc/resolv.conf.bak
 sudo ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
 ```
 ##### #######################END################################
-验证**`DNS`**设置是否成功：dig www.baidu.com   
+验证**DNS**设置是否成功：dig www.baidu.com   
 
 ##  2.  优化Tmux的设置
 ### Tmux Config need Install tmux first：
