@@ -1,5 +1,5 @@
 # con_online
-## 1. 新开CT主机，需要修改DNS以适合更多的场景 opdins And CNNIC
+## 1. 新开CT主机，需要修改DNS以适合更多的场景 openDNS And CNNIC
 
 ##### #######################Start################################
 ```bash
