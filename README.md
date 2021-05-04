@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mzlogin/rouge-themes@master/gruvbox.dark.css">
 # con_online
 ## 新开CT主机，需要修改DNS以适合更多的场景 opdins And CNNIC
 
