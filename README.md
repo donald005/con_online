@@ -14,12 +14,9 @@ sudo ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
 
 ##  优化Tmux的设置
 ### Tmux Config Install tmux first：
-##### wget --no-check-certificate https://raw.githubusercontent.com/donald005/con_online/master/.tmux.conf && chmod +666 .tmux.conf
-##### wget --no-check-certificate https://raw.githubusercontent.com/donald005/con_online/master/tdonal.sh && chmod +x tdonal.sh
-##### reboot
-
 ```
 wget --no-check-certificate https://raw.githubusercontent.com/donald005/con_online/master/.tmux.conf && chmod +666 .tmux.conf
-
 wget --no-check-certificate https://raw.githubusercontent.com/donald005/con_online/master/tdonal.sh && chmod +x tdonal.sh
 ```
+##### reboot
+
