@@ -1,5 +1,6 @@
 # con_online
-## 新开CT主机，需要修改DNS以适合更多的场景 opdins And CNNIC
+<p style='color:red'>This is some red text.</p>
+## <font color="red">新开CT主机，需要修改DNS以适合更多的场景 opdins And CNNIC</font>
 
 ##### #######################Start################################
 ```bash
