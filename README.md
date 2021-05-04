@@ -23,7 +23,7 @@ wget --no-check-certificate https://raw.githubusercontent.com/donald005/con_onli
 ##### reboot    
 
 ## 3. Tunnel Forward CT to ZT.27    
-使用脚本前需要先安装ZT主程序
+**You need to install the ZT main program before using the script**   
 ```bash
 bash <(curl -sSL https://raw.githubusercontent.com/donald005/con_online/master/iptable.sh)
 ```
