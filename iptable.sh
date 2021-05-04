@@ -1,5 +1,6 @@
 #!/bin/sh
 #Edit by FuJunyi China LuZhou
+#Created  : 2021 May 04
 #Forwar to 27.donald
 #Get ZT ip
 #(ip a | grep -A2 ztbpablwcb | awk '/inet/{print $2}'| cut -f 1 -d "/"|awk 'NR==1')
