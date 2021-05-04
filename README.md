@@ -22,7 +22,7 @@ wget --no-check-certificate https://raw.githubusercontent.com/donald005/con_onli
 ####  **生效需要**
 <html>
 <table>
-<font color=red size=5>rboot size=5</font>
+<font color='red' size=12>rboot</font>
 </table>
 </html>   
 
