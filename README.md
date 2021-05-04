@@ -1,5 +1,5 @@
-# **con_online**
-# 1. 新开CT主机，需要修改DNS以适合更多的场景 openDNS And CNNIC
+# 自用在线配置（不要问我有什么用）
+## 1. 新开CT主机，需要修改DNS以适合更多的场景 openDNS And CNNIC
 
 #######################Start################################    
 ```bash
@@ -13,7 +13,7 @@ sudo ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
 #######################END################################    
 验证**DNS**设置是否成功：dig github.com   
 
-#  2.  优化Tmux的设置
+##  2.  优化Tmux的设置
 Tmux Config need Install tmux first：    
 ```bash
 wget --no-check-certificate https://raw.githubusercontent.com/donald005/con_online/master/.tmux.conf && chmod +666 .tmux.conf
@@ -22,9 +22,9 @@ wget --no-check-certificate https://raw.githubusercontent.com/donald005/con_onli
 **生效需要**    
 **reboot** 
 
-# 3. Tunnel Forward CT to ZT.27    
+## 3. Tunnel Forward CT to ZT.27    
 You need to install the ZT main program before using the script**      
 ```bash
 bash <(curl -sSL https://raw.githubusercontent.com/donald005/con_online/master/iptable.sh)
 ```
-#  END
+##  END
