@@ -20,7 +20,11 @@ wget --no-check-certificate https://raw.githubusercontent.com/donald005/con_onli
 wget --no-check-certificate https://raw.githubusercontent.com/donald005/con_online/master/tdonal.sh && chmod +x tdonal.sh
 ```
 ####  **生效需要**
-##### reboot    
+<html>
+<table>
+<font color=red size=5>rboot size=5</font>
+</table>
+</html>   
 
 ## 3. Tunnel Forward CT to ZT.27    
 **You need to install the ZT main program before using the script**   
