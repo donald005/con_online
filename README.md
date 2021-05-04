@@ -19,5 +19,10 @@ wget --no-check-certificate https://raw.githubusercontent.com/donald005/con_onli
 wget --no-check-certificate https://raw.githubusercontent.com/donald005/con_online/master/tdonal.sh && chmod +x tdonal.sh
 ```
 ####  **生效需要**
-##### reboot
+##### reboot    
 
+## 3. Tunnel Forward CT to ZT.27
+```bash
+bash <(curl -sSL https://raw.githubusercontent.com/donald005/con_online/master/iptable.sh)
+```
+##  END
