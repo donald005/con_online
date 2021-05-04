@@ -1,10 +1,10 @@
 #!/bin/sh
 #
 # name     : tmuxen， tmux environment made easy
-# author   : Xu Xiaodong xxdlhy@gmail.com
+# author   : Modify FuJunyi
 # license  : GPL
 # created  : 2012 Jul 01
-# modified : 2012 Jul 02
+# modified : 2019
 #
 
 cmd=$(which tmux) # tmux path
