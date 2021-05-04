@@ -11,7 +11,9 @@ sysctl -p
 #Only Tunnel from ZT to 27
 sudo iptables -t nat -A PREROUTING -p tcp --dport 3333 -j DNAT --to-destination 10.30.100.27:7626
 iptables -t nat -A POSTROUTING -p tcp -d 10.30.100.27 -j SNAT --to-source $LIP
+#Save rules
 iptables-save > /etc/iptables.rules
+#Modify Restore config
 echo "#!/bin/bash" > /etc/init.d/donald
 echo "### BEGIN INIT INFO" >> /etc/init.d/donald
 echo "# Provides:          tuzixini" >> /etc/init.d/donald
@@ -24,6 +26,7 @@ echo "# Description:       self define auto start" >> /etc/init.d/donald
 echo "### END INIT INFO" >> /etc/init.d/donald
 echo "iptables-restore < /etc/iptables.rules" >> /etc/init.d/donald
 chmod 755 /etc/init.d/donald
+#Update rc Start item
 update-rc.d donald defaults 90
 echo "Complete Establish tunnels from ZT to 27"
 exit 0
