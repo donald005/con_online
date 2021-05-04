@@ -1,4 +1,4 @@
-# con_online
+# **con_online**
 ## 1. 新开CT主机，需要修改DNS以适合更多的场景 openDNS And CNNIC
 
 ##### #######################Start################################
@@ -13,7 +13,7 @@ sudo ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
 ##### #######################END################################
 
 ##  2.  优化Tmux的设置
-### Tmux Config Install tmux first：
+### Tmux Config need Install tmux first：
 ```bash
 wget --no-check-certificate https://raw.githubusercontent.com/donald005/con_online/master/.tmux.conf && chmod +666 .tmux.conf
 wget --no-check-certificate https://raw.githubusercontent.com/donald005/con_online/master/tdonal.sh && chmod +x tdonal.sh
