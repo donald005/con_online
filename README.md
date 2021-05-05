@@ -31,4 +31,23 @@ You need to install the ZT main program before using the script**
 ```bash
 bash <(curl -sSL https://raw.githubusercontent.com/donald005/con_online/master/iptable.sh)
 ```
+
+## 4. VPS performance test    
+```bash
+wget https://ilemonrain.com/download/shell...​ && chmod +x LemonBench.sh
+快速测试：
+curl -fsL https://ilemonra.in/LemonBenchIntl​ | bash -s fast
+全面测试：
+curl -fsL https://ilemonra.in/LemonBenchIntl​ | bash -s full
+```
+## 5. VPS to VPS Domestic transfer of VPS    
+```bash
+sip=
+sport=8855
+dip=
+dport=443
+sudo iptables -t nat -A PREROUTING -p tcp --dport $sport -j DNAT --to-destination $dip:$dport
+iptables -t nat -A POSTROUTING -p tcp -d $dip -j SNAT --to-source $sip
+iptables-save > /etc/iptables.rules
+```
 ##  END
