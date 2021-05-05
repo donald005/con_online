@@ -5,7 +5,8 @@
 #Get ZT ip
 #(ip a | grep -A2 ztbpablwcb | awk '/inet/{print $2}'| cut -f 1 -d "/"|awk 'NR==1')
 DIP=10.30.100.27
-LIP=$(ip a | grep -A1 ztbpablwcb | awk '/inet/{print $2}'| cut -f 1 -d "/")
+#ip a | grep -A1 ztbpablwcb | awk '/inet/{print $2}'| cut -f 1 -d "/"
+LIP=$(ip a | grep ztbpablwcb | awk '/inet/{print $2}'| cut -f 1 -d "/")
 #Set ipv4 forward 1
 sed -i '/net.ipv4.ip_forward=/c\net.ipv4.ip_forward=1' /etc/sysctl.conf
 sysctl -p
