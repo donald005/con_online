@@ -35,6 +35,7 @@ bash <(curl -sSL https://raw.githubusercontent.com/donald005/con_online/master/i
 ## 4. VPS performance test    
 ```bash
 网上多，自己搜索一下
+bash <(curl -sSL https://raw.githubusercontent.com/qd201211/Linux-SpeedTest/master/superbench.sh)
 ```
 ## 5. VPS to VPS Domestic transfer of VPS    
 ```bash
