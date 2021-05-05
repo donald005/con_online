@@ -34,11 +34,7 @@ bash <(curl -sSL https://raw.githubusercontent.com/donald005/con_online/master/i
 
 ## 4. VPS performance test    
 ```bash
-wget https://ilemonrain.com/download/shell...​ && chmod +x LemonBench.sh
-快速测试：
-curl -fsL https://ilemonra.in/LemonBenchIntl​ | bash -s fast
-全面测试：
-curl -fsL https://ilemonra.in/LemonBenchIntl​ | bash -s full
+网上多，自己搜索一下
 ```
 ## 5. VPS to VPS Domestic transfer of VPS    
 ```bash
