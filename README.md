@@ -47,4 +47,17 @@ sudo iptables -t nat -A PREROUTING -p tcp --dport $sport -j DNAT --to-destinatio
 iptables -t nat -A POSTROUTING -p tcp -d $dip -j SNAT --to-source $sip
 iptables-save > /etc/iptables.rules
 ```
+## 6. 开关warp    
+```bash
+开：          
+systemctl enable wg-quick@wgcf
+systemctl start wg-quick@wgcf
+
+重启
+systemctl restart wg-quick@wgcf
+
+关闭：         
+systemctl stop wg-quick@wgcf
+systemctl disable wg-quick@wgcf
+```
 ##  END
