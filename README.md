@@ -62,7 +62,7 @@ systemctl disable wg-quick@wgcf
 ```
 ## 7. 时间修改    
 显示时区        
-date -R
+date -R           
 北京时间        
 cp /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime        
 timedatectl set-timezone Asia/Shanghai            
