@@ -60,4 +60,15 @@ systemctl restart wg-quick@wgcf
 systemctl stop wg-quick@wgcf
 systemctl disable wg-quick@wgcf
 ```
+## 7. 时间修改    
+显示时区        
+date -R
+北京时间        
+cp /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime        
+timedatectl set-timezone Asia/Shanghai            
+sudo date -s MM/DD/YY //修改日期        
+sudo date -s hh:mm:ss //修改时间        
+硬件时间依赖于系统时间
+sudo hwclock --systohc 
+
 ##  END
