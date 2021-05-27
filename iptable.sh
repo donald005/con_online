@@ -18,7 +18,7 @@ iptables-save > /etc/iptables.rules
 #Modify Restore config
 echo "#!/bin/bash" > /etc/init.d/donald
 echo "### BEGIN INIT INFO" >> /etc/init.d/donald
-echo "# Provides:          tuzixini" >> /etc/init.d/donald
+echo "# Provides:          DFergus" >> /etc/init.d/donald
 echo "# Required-Start:    $local_fs $network" >> /etc/init.d/donald
 echo "# Required-Stop:     $local_fs" >> /etc/init.d/donald
 echo "# Default-Start:     2 3 4 5" >> /etc/init.d/donald
