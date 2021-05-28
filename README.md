@@ -69,6 +69,9 @@ timedatectl set-timezone Asia/Shanghai
 sudo date -s MM/DD/YY //修改日期        
 sudo date -s hh:mm:ss //修改时间        
 硬件时间依赖于系统时间
-sudo hwclock --systohc 
+sudo hwclock --systohc  
+
+## 8. 小鸡一键脚本   
+wget -N --no-check-certificate https://raw.githubusercontent.com/xiaoyaoguangshijie/xiaoyao1/master/DDfuhe/DD.sh && chmod +x DD.sh && bash DD.sh  
 
 ##  END
