@@ -72,6 +72,7 @@ sudo date -s hh:mm:ss //修改时间
 sudo hwclock --systohc  
 
 ## 8. 小鸡一键脚本   
+```bash
 wget -N --no-check-certificate https://raw.githubusercontent.com/xiaoyaoguangshijie/xiaoyao1/master/DDfuhe/DD.sh && chmod +x DD.sh && bash DD.sh  
-
+```
 ##  END
