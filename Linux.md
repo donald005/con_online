@@ -3,7 +3,7 @@
 #######################Start################################    
 ```bash
 find 路径 -mtime +天数 -type f -name "文件名" -exec rm -rf {} ;
-
+find . +10 -type d #当前目录下10天前文件夹
 find /tmp -mtime +30 -type f -name "*" -exec rm -rf {} \;
 /tmp --设置查找的目录；
 -mtime +30 --设置修改时间为30天前；
