@@ -9,3 +9,5 @@
 # Description:       self define auto start
 ### END INIT INFO
 iptables-restore < /etc/iptables.rules
+
+exit 0
