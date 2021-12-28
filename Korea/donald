@@ -8,3 +8,4 @@
 # Short-Description: self define auto start
 # Description:       self define auto start
 ### END INIT INFO
+iptables-restore < /etc/iptables.rules
