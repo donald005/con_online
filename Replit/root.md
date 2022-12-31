@@ -1,10 +1,10 @@
-搭建trojan
-非常简单，Fork https://replit.com/@sos801107/trojan?v=1
-备用地址： https://replit.com/@oracleservice/trojan
-然后运行 bash main.sh
-即可看到 trojan链接和二维码，实测路由器可用。
-Replit获得root权限的方法
-首先，我们在Replit创建一个Bash；
+搭建trojan  
+非常简单，Fork https://replit.com/@sos801107/trojan?v=1  
+备用地址： https://replit.com/@oracleservice/trojan  
+然后运行 bash main.sh  
+即可看到 trojan链接和二维码，实测路由器可用。  
+Replit获得root权限的方法  
+首先，我们在Replit创建一个Bash；  
 
 然后我们在项目右侧Console窗口依次执行下列命令：
 
