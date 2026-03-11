@@ -1,0 +1,19 @@
+//自用v2rayN-Oracle
+[
+  {
+    "port": "",
+    "outboundTag": "KR-Oracle_Cloud",
+    "ip": [
+      "131.186.22.50",
+      "146.56.137.186",
+      "129.154.192.44",
+      "2603:c022:8004:1505::/64"
+    ],
+    "domain": [
+      "k.7890.eu.org",
+      "barn.eu.org"
+    ],
+    "enabled": true,
+    "remarks": "oracle"
+  }
+]
