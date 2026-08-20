@@ -1,0 +1,16 @@
+docker network create --driver=bridge --subnet=10.30.0.0/24 --gateway=10.30.0.1 mynetwork
+docker ps -a
+docker network ls
+::Tunnel
+docker run -d   --name cftunnel   --restart on-failure   --network mynetwork   --ip 10.30.0.2   cloudflare/cloudflared:latest tunnel --no-autoupdate run --token eyJhIjoiZTQ4N2ZiYzY4YThmZDMxOTNhMjA0ZmU4YzI1OGNlMDIiLCJ0IjoiOWI1OWM5MGQtOTQxNC00M2Q2LWJmNzctM2NjOWMyZmIwZWY1IiwicyI6IllUUTJNVEU1TmpFdE1EbGpOaTAwTUdFekxXSXhaakF0WmpSbFlqQmlNR1E1WVdZeSJ9
+::tv-core
+docker run -d   --name decotv-core   --hostname deco-server   --restart on-failure   --network mynetwork   --ip 10.30.0.3   -e USERNAME=donald   -e PASSWORD=ghost005   -e NEXT_PUBLIC_STORAGE_TYPE=upstash   -e UPSTASH_URL=https://valued-crow-18543.upstash.io   -e UPSTASH_TOKEN=AUhvAAIncDI5ZGE3MzQ3NzUzY2Y0ZDY2OTI5ZjE4NmMyMGZkZWVmY3AyMTg1NDM   ghcr.io/decohererk/decotv:latest
+::
+docker network ls
+docker network
+docker network inspect mynetwork
+
+docker run -d   --name watchtower   --restart unless-stopped   -v /var/run/docker.sock:/var/run/docker.sock   -e DOCKER_API_VERSION=1.54   containrrr/watchtower   --cleanup   --include-stopped   decotv-core
+ docker ps
+::schedule
+docker run -d   --name watchtower   --restart unless-stopped   -v /var/run/docker.sock:/var/run/docker.sock   -e DOCKER_API_VERSION=1.54   -e TZ=Asia/Shanghai   containrrr/watchtower   --cleanup   --include-stopped   --schedule "0 0 6 * * *"   decotv-core
