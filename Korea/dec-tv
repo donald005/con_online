@@ -1,8 +1,19 @@
-docker network create --driver=bridge --subnet=10.30.0.0/24 --gateway=10.30.0.1 mynetwork
+docker network create \
+--driver=bridge \
+--subnet=10.30.0.0/24 \
+--gateway=10.30.0.1 \
+mynetwork
+
 docker ps -a
 docker network ls
 ::Tunnel
-docker run -d   --name cftunnel   --restart on-failure   --network mynetwork   --ip 10.30.0.2   cloudflare/cloudflared:latest tunnel --no-autoupdate run --token eyJhIjoiZTQ4N2ZiYzY4YThmZDMxOTNhMjA0ZmU4YzI1OGNlMDIiLCJ0IjoiOWI1OWM5MGQtOTQxNC00M2Q2LWJmNzctM2NjOWMyZmIwZWY1IiwicyI6IllUUTJNVEU1TmpFdE1EbGpOaTAwTUdFekxXSXhaakF0WmpSbFlqQmlNR1E1WVdZeSJ9
+docker run -d   \
+--name cftunnel   \
+--restart on-failure   \
+--network mynetwork   \
+--ip 10.30.0.2   \
+cloudflare/cloudflared:latest tunnel --no-autoupdate run --token eyJhIjoiZTQ4N2ZiYzY4YThmZDMxOTNhMjA0ZmU4YzI1OGNlMDIiLCJ0IjoiOWI1OWM5MGQtOTQxNC00M2Q2LWJmNzctM2NjOWMyZmIwZWY1IiwicyI6IllUUTJNVEU1TmpFdE1EbGpOaTAwTUdFekxXSXhaakF0WmpSbFlqQmlNR1E1WVdZeSJ9
+
 ::tv-core
 docker run -d \
 --name decotv-core \
