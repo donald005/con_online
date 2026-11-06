@@ -1,0 +1,65 @@
+services:
+  cftunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: cftunnel
+    hostname: cftunnel
+    restart: unless-stopped
+    # --no-autoupdate 保留：版本更新以镜像为准，不让容器内二进制自己升级
+    # token 从 .env 的 CF_TOKEN 读入，不要写死在这里
+    command: tunnel --no-autoupdate run --token ${CF_TOKEN}
+    networks:
+      mynetwork:
+        ipv4_address: 10.30.0.2
+
+  decotv-core:
+    image: ghcr.io/decohererk/decotv:latest
+    container_name: decotv-core
+    hostname: deco-server
+    restart: unless-stopped
+    env_file:
+      - .env
+    networks:
+      mynetwork:
+        ipv4_address: 10.30.0.3
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"fetch('http://127.0.0.1:3000').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))\""]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+  watchtower:
+    # 关键改动：containrrr/watchtower 已于 2025-12-17 归档，停在 v1.7.1 不再更新
+    # 改用维护中的 fork nickfedor/watchtower，配置用法完全相同
+    image: nickfedor/watchtower:latest
+    container_name: watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - TZ=Asia/Shanghai
+      # 每天 06:00（北京时间）检查一次，6 字段 cron：秒 分 时 日 月 周
+      - WATCHTOWER_SCHEDULE=0 0 6 * * *
+      # 更新成功后删掉旧镜像，防止磁盘越长越大
+      - WATCHTOWER_CLEANUP=true
+      # 停掉的容器也检查更新（配合 revive 一起用，更新后会重新拉起来）
+      - WATCHTOWER_INCLUDE_STOPPED=true
+      - WATCHTOWER_REVIVE_STOPPED=true
+      # 一个一个更新，不同时停掉隧道和应用
+      - WATCHTOWER_ROLLING_RESTART=true
+      # 停止旧容器等 30 秒再杀，超时则强制停
+      - WATCHTOWER_TIMEOUT=30
+    # 三个都要写上：cftunnel + decotv-core + watchtower 自己
+    # watchtower 自己在列表里时，新版本发布后它会自己更新自己并重启
+    command: --cleanup --include-stopped --revive-stopped --rolling-restart cftunnel decotv-core watchtower
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    name: mynetwork
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.30.0.0/24
+          gateway: 10.30.0.1
