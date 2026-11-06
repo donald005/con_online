@@ -7,9 +7,13 @@ services:
     # --no-autoupdate 保留：版本更新以镜像为准，不让容器内二进制自己升级
     # token 从 .env 的 CF_TOKEN 读入，不要写死在这里
     command: tunnel --no-autoupdate run --token ${CF_TOKEN}
+    # 2026-11-06 修正：不再给容器写固定 IP。
+    # 之前 cftunnel 固定 10.30.0.2、decotv-core 固定 10.30.0.3，
+    # 但 watchtower 没写固定 IP，先启动时被 Docker 动态分到 10.30.0.2，
+    # cftunnel 再要这个 IP 就报 Address already in use。
+    # 同网段内直接用容器名解析（decotv-core:3000），固定 IP 没有用。
     networks:
-      mynetwork:
-        ipv4_address: 10.30.0.2
+      - mynetwork
 
   decotv-core:
     image: ghcr.io/decohererk/decotv:latest
@@ -19,8 +23,7 @@ services:
     env_file:
       - .env
     networks:
-      mynetwork:
-        ipv4_address: 10.30.0.3
+      - mynetwork
     healthcheck:
       test: ["CMD-SHELL", "node -e \"fetch('http://127.0.0.1:3000').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))\""]
       interval: 30s
