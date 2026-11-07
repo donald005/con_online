@@ -6,7 +6,8 @@
 # 页面内容在 laofujs 仓库里维护，改页面不用动 Dockerfile，下次容器启动即生效。
 # 构建: docker build -t ghost-manual:latest .
 # 运行: docker run -d --restart unless-stopped --name ghost-manual \
-#         -e UUID='你的UUID' -e ARGO_AUTH='你的隧道token' -e ARGO_DOMAIN='mxshs.barn.eu.org' \
+#         -e UUID='你的UUID' -e ARGO_AUTH='你的隧道token' \
+#         -e WS_PATH='asd' -e ARGO_DOMAIN='www.google.com' \
 #         ghost-manual:latest
 # 部署时拉取最新版：容器每次启动都尝试拉取最新 xray / cloudflared / 伪装页，
 # 拉不到就用镜像里构建时自带的版本继续跑（镜像仍会在构建时下一份当保底）。
@@ -56,13 +57,28 @@ set -eu
 
 UUID="${UUID:?环境变量 UUID 未设置}"
 ARGO_AUTH="${ARGO_AUTH:?环境变量 ARGO_AUTH 未设置}"
-ARGO_DOMAIN="${ARGO_DOMAIN:-}"
+ARGO_DOMAIN="${ARGO_DOMAIN:-www.google.com}"
 XRAY_PORT="${XRAY_PORT:-8001}"
 XRAY_LOGLEVEL="${XRAY_LOGLEVEL:-warning}"
 XRAY_ACCESS_LOG="${XRAY_ACCESS_LOG:-}"
+WS_PATH="${WS_PATH:-asd}"
 
 log() { echo "[$(date '+%H:%M:%S')] $*"; }
 
+# ---------- 处理 WS_PATH ----------
+# 去掉首尾空格和斜杠，再统一加上前导 /
+WS_PATH=$(printf '%s' "$WS_PATH" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//;s|^/*||;s|/*$||')
+if [ -n "$WS_PATH" ]; then
+  WS_PATH="/$WS_PATH"
+else
+  WS_PATH=""
+fi
+
+VLESS_PATH="${WS_PATH}/vless-argo"
+VMESS_PATH="${WS_PATH}/vmess-argo"
+TROJAN_PATH="${WS_PATH}/trojan-argo"
+
+log "使用路径: VLESS=${VLESS_PATH}  VMess=${VMESS_PATH}  Trojan=${TROJAN_PATH}"
 [ -n "$ARGO_DOMAIN" ] || log "警告: ARGO_DOMAIN 为空，节点链接将无法生成（不影响隧道本身）"
 
 # ---------- 启动时拉取最新版 ----------
@@ -181,9 +197,9 @@ cat > /etc/xray/config.json <<EOF
         "decryption": "none",
         "fallbacks": [
           { "dest": 3001 },
-          { "path": "/vless-argo", "dest": 3002 },
-          { "path": "/vmess-argo", "dest": 3003 },
-          { "path": "/trojan-argo", "dest": 3004 }
+          { "path": "${VLESS_PATH}", "dest": 3002 },
+          { "path": "${VMESS_PATH}", "dest": 3003 },
+          { "path": "${TROJAN_PATH}", "dest": 3004 }
         ]
       },
       "streamSettings": { "network": "tcp" }
@@ -192,19 +208,19 @@ cat > /etc/xray/config.json <<EOF
       "tag": "vless-ws-in", "port": 3002, "listen": "127.0.0.1",
       "protocol": "vless",
       "settings": { "clients": [ { "id": "${UUID}", "level": 0 } ], "decryption": "none" },
-      "streamSettings": { "network": "ws", "security": "none", "wsSettings": { "path": "/vless-argo" } }
+      "streamSettings": { "network": "ws", "security": "none", "wsSettings": { "path": "${VLESS_PATH}" } }
     },
     {
       "tag": "vmess-ws-in", "port": 3003, "listen": "127.0.0.1",
       "protocol": "vmess",
       "settings": { "clients": [ { "id": "${UUID}", "alterId": 0 } ] },
-      "streamSettings": { "network": "ws", "security": "none", "wsSettings": { "path": "/vmess-argo" } }
+      "streamSettings": { "network": "ws", "security": "none", "wsSettings": { "path": "${VMESS_PATH}" } }
     },
     {
       "tag": "trojan-ws-in", "port": 3004, "listen": "127.0.0.1",
       "protocol": "trojan",
       "settings": { "clients": [ { "password": "${UUID}" } ] },
-      "streamSettings": { "network": "ws", "security": "none", "wsSettings": { "path": "/trojan-argo" } }
+      "streamSettings": { "network": "ws", "security": "none", "wsSettings": { "path": "${TROJAN_PATH}" } }
     }
   ],
   "outbounds": [
@@ -230,9 +246,9 @@ fi
 
 # ---------- 生成节点链接 ----------
 if [ -n "$ARGO_DOMAIN" ]; then
-  VLESS_URL="vless://${UUID}@${ARGO_DOMAIN}:443?encryption=none&security=tls&sni=${ARGO_DOMAIN}&fp=chrome&type=ws&path=/vless-argo#VLESS-WS"
-  TROJAN_URL="trojan://${UUID}@${ARGO_DOMAIN}:443?security=tls&sni=${ARGO_DOMAIN}&fp=chrome&type=ws&path=/trojan-argo#Trojan-WS"
-  VMESS_JSON="{\"v\":\"2\",\"ps\":\"VMess-WS\",\"add\":\"${ARGO_DOMAIN}\",\"port\":\"443\",\"id\":\"${UUID}\",\"aid\":\"0\",\"scy\":\"auto\",\"net\":\"ws\",\"type\":\"none\",\"host\":\"${ARGO_DOMAIN}\",\"path\":\"/vmess-argo\",\"tls\":\"tls\",\"sni\":\"${ARGO_DOMAIN}\",\"fp\":\"chrome\"}"
+  VLESS_URL="vless://${UUID}@${ARGO_DOMAIN}:443?encryption=none&security=tls&sni=${ARGO_DOMAIN}&fp=chrome&type=ws&path=${VLESS_PATH}#VLESS-WS"
+  TROJAN_URL="trojan://${UUID}@${ARGO_DOMAIN}:443?security=tls&sni=${ARGO_DOMAIN}&fp=chrome&type=ws&path=${TROJAN_PATH}#Trojan-WS"
+  VMESS_JSON="{\"v\":\"2\",\"ps\":\"VMess-WS\",\"add\":\"${ARGO_DOMAIN}\",\"port\":\"443\",\"id\":\"${UUID}\",\"aid\":\"0\",\"scy\":\"auto\",\"net\":\"ws\",\"type\":\"none\",\"host\":\"${ARGO_DOMAIN}\",\"path\":\"${VMESS_PATH}\",\"tls\":\"tls\",\"sni\":\"${ARGO_DOMAIN}\",\"fp\":\"chrome\"}"
   VMESS_B64="$(printf '%s' "$VMESS_JSON" | base64 | tr -d '\n')"
   VMESS_URL="vmess://${VMESS_B64}"
   log "================ 节点链接 ================"
@@ -386,8 +402,9 @@ EOS
 
 ENV UUID="" \
     ARGO_AUTH="" \
-    ARGO_DOMAIN="" \
+    ARGO_DOMAIN="www.google.com" \
     XRAY_PORT=8001 \
+    WS_PATH="asd" \
     TZ=Asia/Shanghai
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
