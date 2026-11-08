@@ -12,8 +12,7 @@ docker run -d   \
 --restart on-failure   \
 --network mynetwork   \
 --ip 10.30.0.2   \
-cloudflare/cloudflared:latest tunnel --no-autoupdate run --token eyJhIjoiZTQ4N2ZiYzY4YThmZDMxOTNhMjA0ZmU4YzI1OGNlMDIiLCJ0IjoiOWI1OWM5MGQtOTQxNC00M2Q2LWJmNzctM2NjOWMyZmIwZWY1IiwicyI6IllUUTJNVEU1TmpFdE1EbGpOaTAwTUdFekxXSXhaakF0WmpSbFlqQmlNR1E1WVdZeSJ9
-
+cloudflare/cloudflared:latest tunnel --no-autoupdate run --token eyJhIjoiZTQ
 ::tv-core
 docker run -d \
 --name decotv-core \
@@ -25,7 +24,7 @@ docker run -d \
 -e PASSWORD=ghost005 \
 -e NEXT_PUBLIC_STORAGE_TYPE=upstash \
 -e UPSTASH_URL=https://valued-crow-18543.upstash.io \
--e UPSTASH_TOKEN=AUhvAAIncDI5ZGE3MzQ3NzUzY2Y0ZDY2OTI5ZjE4NmMyMGZkZWVmY3AyMTg1NDM \
+-e UPSTASH_TOKEN=AUhvAA \
 ghcr.io/decohererk/decotv:latest
 ::
 docker network ls
