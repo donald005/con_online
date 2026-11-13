@@ -34,18 +34,6 @@ services:
       retries: 3
       start_period: 20s
 
-  decotv-kvrocks:
-    # 2026-11-09：Upstash 免费库月末将撞 50 万命令线，改走本机 Kvrocks
-    # （Redis 协议兼容、数据落磁盘，无月度额度；官方 README 推荐）
-    image: apache/kvrocks:latest
-    container_name: decotv-kvrocks
-    hostname: decotv-kvrocks
-    restart: unless-stopped
-    volumes:
-      - kvrocks-data:/var/lib/kvrocks
-    networks:
-      - mynetwork
-
   watchtower:
     # 关键改动：containrrr/watchtower 已于 2025-12-17 归档，停在 v1.7.1 不再更新
     # 改用维护中的 fork nickfedor/watchtower，配置用法完全相同
@@ -67,14 +55,12 @@ services:
       - WATCHTOWER_ROLLING_RESTART=true
       # 停止旧容器等 30 秒再杀，超时则强制停
       - WATCHTOWER_TIMEOUT=30
-    # 四个都要写上：cftunnel + decotv-core + decotv-kvrocks + watchtower 自己
+    # 三个都要写上：cftunnel + decotv-core + watchtower 自己
     # watchtower 自己在列表里时，新版本发布后它会自己更新自己并重启
-    command: --cleanup --include-stopped --revive-stopped --rolling-restart cftunnel decotv-core decotv-kvrocks watchtower
+    # 2026-11-13：用户决定不迁 Kvrocks，kvrocks 服务已从本文件移除
+    command: --cleanup --include-stopped --revive-stopped --rolling-restart cftunnel decotv-core watchtower
     networks:
       - mynetwork
-
-volumes:
-  kvrocks-data:
 
 networks:
   mynetwork:
